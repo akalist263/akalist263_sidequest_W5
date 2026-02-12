@@ -14,7 +14,7 @@ class WorldLevel {
   }
 
   drawBackground() {
-    background(220);
+    background(211, 205, 215); // Changed background to purple
   }
 
   drawWorld() {
@@ -27,8 +27,14 @@ class WorldLevel {
     for (let y = 0; y <= this.h; y += this.gridStep) line(0, y, this.w, y);
 
     noStroke();
-    fill(170, 190, 210);
+    fill(82, 61, 74); // update obstacle colour
     for (const o of this.obstacles) rect(o.x, o.y, o.w, o.h, o.r ?? 0);
+
+    fill(128, 94, 115);
+    rect(0, 0, this.w, 35); // top wall
+    rect(0, 0, 35, this.h); // left wall
+    rect(0, this.h - 35, this.w, 35); // bottom wall
+    rect(this.w - 35, 0, 35, this.h); // right wall
   }
 
   drawHUD(player, camX, camY) {
