@@ -25,6 +25,11 @@ let player;
 let camX = 0;
 let camY = 0;
 
+//The following code was taken from chatGPT
+let shakeAmount = 0;
+let shakeTime = 0;
+// Return to original code
+
 function preload() {
   worldData = loadJSON("world.json"); // load JSON before setup [web:122]
 }
@@ -43,8 +48,30 @@ function setup() {
   camY = player.y - height / 2;
 }
 
+// The following code was taken from ChatGPT
+function triggerFear(amount) {
+  shakeAmount = min(shakeAmount + amount, level.fearShake.max);
+}
+// Return to original code
+
 function draw() {
   player.updateInput();
+
+  // The following code was taken from ChatGPT
+  const moving =
+    keyIsDown(LEFT_ARROW) ||
+    keyIsDown(RIGHT_ARROW) ||
+    keyIsDown(UP_ARROW) ||
+    keyIsDown(DOWN_ARROW) ||
+    keyIsDown(65) ||
+    keyIsDown(68) ||
+    keyIsDown(87) ||
+    keyIsDown(83);
+
+  if (moving) {
+    triggerFear(9);
+  }
+  //Return to original code
 
   // Keep player inside world
   player.x = constrain(player.x, 0, level.w);
@@ -64,6 +91,20 @@ function draw() {
   const camLerp = level.camLerp; // ← data-driven now
   camX = lerp(camX, targetX, camLerp);
   camY = lerp(camY, targetY, camLerp);
+
+  // Fear-based camera shake -- Taken from ChatGPT
+  if (shakeAmount > 0.01) {
+    shakeTime += level.fearShake.frequency;
+
+    const offsetX = noise(shakeTime) * 2 - 1;
+    const offsetY = noise(shakeTime + 100) * 2 - 1;
+
+    camX += offsetX * shakeAmount;
+    camY += offsetY * shakeAmount;
+
+    shakeAmount *= level.fearShake.decay;
+  }
+  // Return to Original code
 
   level.drawBackground();
 

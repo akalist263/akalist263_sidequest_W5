@@ -11,6 +11,14 @@ class WorldLevel {
 
     // NEW: camera tuning knob from JSON (data-driven)
     this.camLerp = json.camera?.lerp ?? 0.12;
+
+    //The following code was taken from ChatGPT
+    this.fearShake = {
+      max: json.camera?.fearShake?.max ?? 4,
+      decay: json.camera?.fearShake?.decay ?? 0.92,
+      frequency: json.camera?.fearShake?.frequency ?? 0.15,
+    };
+    // Return to original code
   }
 
   drawBackground() {
@@ -29,6 +37,7 @@ class WorldLevel {
     noStroke();
     fill(82, 61, 74); // update obstacle colour
     // for (const o of this.obstacles) rect(o.x, o.y, o.w, o.h, o.r ?? 0);
+    // Took this code from example 3 to generate more obstacles
     for (const o of this.obstacles) {
       rect(o.x, o.y, o.w, o.h, o.r ?? 0);
     }
@@ -43,7 +52,7 @@ class WorldLevel {
   drawHUD(player, camX, camY) {
     noStroke();
     fill(20);
-    text("Example 4 — JSON world + smooth camera (lerp).", 12, 20);
+    text("Sidequest 5 - Allison Kalist.", 12, 20);
     text(
       "camLerp(JSON): " +
         this.camLerp +
