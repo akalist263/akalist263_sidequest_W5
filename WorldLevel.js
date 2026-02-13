@@ -28,7 +28,10 @@ class WorldLevel {
 
     noStroke();
     fill(82, 61, 74); // update obstacle colour
-    for (const o of this.obstacles) rect(o.x, o.y, o.w, o.h, o.r ?? 0);
+    // for (const o of this.obstacles) rect(o.x, o.y, o.w, o.h, o.r ?? 0);
+    for (const o of this.obstacles) {
+      rect(o.x, o.y, o.w, o.h, o.r ?? 0);
+    }
 
     fill(128, 94, 115);
     rect(0, 0, this.w, 35); // top wall
